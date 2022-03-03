@@ -249,3 +249,29 @@ function sol = jacobi_method(A, b, N)
     
 end
 ```
+
+## Finding coefficients of any equation with given data.
+
+#### Example below of where `x - stock price` `y-day of month`
+#### writing in the form of `p0-ae^(0.01x)`
+```
+% x and y values
+x = [700 678 984 547 442 418 300]'
+y = [6 12 20 5 6 3 2]'
+
+% finding coefficients equation in the form p0-ae^(0.01x)
+
+% first generate expression for your equation
+expr = fittype({'1','-exp(0.01*(x))'},'coefficients',{'p0','a'});
+
+% now fit the equation this will spit out your coefficients values
+coeff = fit(x,y,expr);
+
+% this sets the range of the graph
+xx = linspace(0,2000);
+
+%plotting graph
+plot(x,y,'o',xx,coeff(xx),'r-');
+legend('Data Points','Exponential curve fit','Location','best');
+
+```

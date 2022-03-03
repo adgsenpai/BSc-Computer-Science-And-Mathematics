@@ -203,9 +203,6 @@ function GuassSeidel(A,B, convergeVal, maxIteration)
         j(i) = [];
         C = abs(A(i,j));
         Check(i,1) = abs(A(i,i)) - sum(B);
-        if Check(i) < 0
-            fprintf('The matrix is not strictly diagonally dominant at row %2i',i)
-        end
     end
     iter = 0;
     while max(err) > convergeVal
@@ -224,8 +221,31 @@ function GuassSeidel(A,B, convergeVal, maxIteration)
             break;      
         end  
     end
-    disp("Solution using Guass Seidel Model : ");
-    disp(Xs(1)),disp(Xs(2)),disp(Xs(3));
+    disp("Solutions using Guass Seidel Model : ");
+    disp(Xs)
     disp("Number of iterations :"),disp(iter);
+end
+```
+
+#### Jacobi Method
+
+```
+% Method to solve a linear system via jacobi iteration
+% A: matrix in Ax = b
+% b: column vector in Ax = b
+% N: number of iterations
+% returns: column vector solution after N iterations
+
+function sol = jacobi_method(A, b, N)
+	diagonal = diag(diag(A)); % strip out the diagonal
+	diag_deleted = A - diagonal; % delete the diagonal
+	
+	sol = zeros(size(b, 1), 1); % initial guess of zero
+    
+	for i = 1:N
+        % computing the matrix inverse
+		sol = diagonal \ (b - diag_deleted * sol);
+    end
+    
 end
 ```
